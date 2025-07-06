@@ -18,3 +18,5 @@ CREATE TABLE IF NOT EXISTS student(
     major VARCHAR(20) UNIQUE
 );
 ```
+##刪除資料表
+DROP TABLE IF EXISTS student;
