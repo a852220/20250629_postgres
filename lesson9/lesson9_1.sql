@@ -46,3 +46,4 @@ WHERE "name" = '基隆'
     AND date_part('year',"日期") IN (2020, 2021, 2022)
 GROUP BY "name", "年份"
 ORDER BY "年份";
+
