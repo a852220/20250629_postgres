@@ -29,3 +29,20 @@ FROM "每日各站進出站人數" LEFT JOIN "台鐵車站資訊" ON "車站代�
 WHERE "name" = '基隆'
 GROUP BY "name","年份"
 ORDER BY "進站人數" DESC;
+
+
+/*
+ * 基隆火車站 2020、2021、2022 年每年進站人數
+ */
+SELECT 
+    "name" AS 站名,
+    date_part('year',"日期") AS "年份",
+    COUNT(*) AS 資料筆數,
+    SUM("進站人數") AS "年度進站總人數",
+    AVG("進站人數") AS "平均每日進站人數"
+FROM "每日各站進出站人數" 
+LEFT JOIN "台鐵車站資訊" ON "車站代碼" = "stationCode"
+WHERE "name" = '基隆' 
+    AND date_part('year',"日期") IN (2020, 2021, 2022)
+GROUP BY "name", "年份"
+ORDER BY "年份";
