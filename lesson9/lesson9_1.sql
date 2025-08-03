@@ -31,8 +31,10 @@ GROUP BY "name","年份"
 ORDER BY "進站人數" DESC;
 
 
+
+
 /*
- * 基隆火車站 2020、2021、2022 年每年進站人數
+ * 基隆火車站和臺北火車站 2020、2021、2022 年每年進站人數比較
  */
 SELECT 
     "name" AS 站名,
@@ -42,8 +44,23 @@ SELECT
     AVG("進站人數") AS "平均每日進站人數"
 FROM "每日各站進出站人數" 
 LEFT JOIN "台鐵車站資訊" ON "車站代碼" = "stationCode"
-WHERE "name" = '基隆' 
+WHERE "name" IN ('基隆', '臺北') 
     AND date_part('year',"日期") IN (2020, 2021, 2022)
 GROUP BY "name", "年份"
-ORDER BY "年份";
+ORDER BY "name", "年份";
+
+/*
+ * 查詢 2022 年平均每日進站人數超過 2 萬人的站點
+ */
+SELECT 
+    "name" AS 站名,
+    COUNT(*) AS 資料筆數,
+    SUM("進站人數") AS "年度進站總人數",
+    AVG("進站人數") AS "平均每日進站人數"
+FROM "每日各站進出站人數" 
+LEFT JOIN "台鐵車站資訊" ON "車站代碼" = "stationCode"
+WHERE date_part('year',"日期") = 2022
+GROUP BY "name"
+HAVING AVG("進站人數") > 20000
+ORDER BY AVG("進站人數") DESC;
 
