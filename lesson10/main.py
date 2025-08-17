@@ -1,9 +1,9 @@
-import source
+import datasource
 import streamlit as st
 
 def main():
     st.title("台鐵車站名稱列表")
-    results = source.get_stations_names()
+    results = datasource.get_stations_names()
     if results:
         st.dataframe(results, width=400, height=600)
     else:
